@@ -16,6 +16,9 @@ ArrayList<paddle> paddles = new ArrayList();
 Serial myPort;  // Create object from Serial class
 
 float pre_xx=0;
+float pre_puckX, pre_puckY;
+boolean firstContact = false;   
+   
 // Class Types
 Puck puck;
 paddle p1,p2;
@@ -26,8 +29,8 @@ boolean inPlay = false;
 boolean menu = true;
 
 // First Menu variables
-String title = "iMEDIA\nAIR HOCKEY";
-String creater = "created by\nStuart Murphy";
+String title = "AIR HOCKEY";
+String creater = "Created by Stuart Murphy\nRevised by Dage, Tyrone";
 String s = "Play";
 
 // Paddle Variables
@@ -90,8 +93,11 @@ void setup()
   victory = minim.loadSnippet("victory.wav");
   
   
-  String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
-  myPort = new Serial(this, portName, 9600);
+  //String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
+  //myPort = new Serial(this, portName, 9600);
+  
+   //myPort = new Serial(this, Serial.list()[4], 9600);
+   //myPort.bufferUntil('\n'); 
 }
 
 void draw()
@@ -105,7 +111,7 @@ void draw()
     
     // Main title with text
     textAlign(CENTER);
-    textSize(70);
+    textSize(50);
     fill(255);
     text(title, width/2, height/4); 
     textSize(15);
@@ -130,7 +136,7 @@ void draw()
     }
 
   // Draw the button
-  rect(bx, by, buttonW, buttonH);
+  rect(bx, by, buttonW, buttonH, 10);
   
   // Text Inside Button  
   textFont(scoreBoard, buttonH); 

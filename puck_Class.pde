@@ -83,10 +83,21 @@ class Puck{
           puckX += vx;
           puckY += vy;
      } 
-    float K= vy/vx;
-     
+    
+    float K=9999;
+    if(puckX-pre_puckX != 0.0)
+    {
+        K= (puckY-pre_puckY)/(puckX-pre_puckX);
+    }
+    
+    
+    //  println("K;; "+ K); 
+    int fflag=0;  
+      
+    pre_puckX = puckX;
+    pre_puckY = puckY;  
     float C = puckY-puckX*K;
-    // println("B "+ C); 
+     //println("B "+ C); 
     float AA = K*K +1;
     float BB = 2*K*(C-height/2)-width;
     float CC = width*width/4+(height/2-C)*(height/2-C)-height*height/4;
@@ -97,19 +108,31 @@ class Puck{
     {
          xx = (-BB-sdelta)/(2*AA);
     }
+    float theta_send = acos( (xx-centerX)/(height/2)) *180/PI;
+    if(vy>0)
+    {
+        theta_send *= -1;
+        theta_send += 360;
+    }
+        
+    println(theta_send);    
+    
+    
     
     if(xx>= centerX+height/2-20 && abs(pre_xx-xx)>=2 )
     {
-        myPort.write("1");
-        println("ready to boom..."+(xx-centerX));
+        //myPort.write("1");
+        println("ready to boom1..."+(xx-centerX));
+        fflag=1;
     }
     
     else if(xx<= centerX-height/2+20 && abs(pre_xx-xx)>=2 )
     {
-        myPort.write("1");
+       // myPort.write("1");
         println("ready to boom..."+(xx-centerX));
+        fflag=1;
     }
-      
+   
     
     pre_xx = xx;
     // Ensure it doesnt go off the X axis UNLESS its a goal
@@ -139,9 +162,7 @@ class Puck{
       }
     }
     
-    
-    
-    
+
  } 
 
 // Get methods
