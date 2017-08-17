@@ -15,6 +15,7 @@ import processing.serial.*;
 ArrayList<paddle> paddles = new ArrayList();
 Serial myPort;  // Create object from Serial class
 
+float pre_xx=0;
 // Class Types
 Puck puck;
 paddle p1,p2;
@@ -215,9 +216,9 @@ void draw()
      // Goals
      rectMode(CENTER);
      fill(255,0,0,180);
-     rect(200,height/2,50,200,10); 
+     rect(200,height/2,50,200,5); 
      fill(255,0,0,180);
-     rect(width-200,height/2,50,200,10); 
+     rect(width-200,height/2,50,200,5); 
     
      // Scoreboard 
      textAlign(CENTER);
@@ -234,7 +235,7 @@ void draw()
        {
          victory.rewind();
          victory.play(); 
-         title="PLAYER 1 WINS";
+         title="YOU WIN";
          creater="";
          s="Again?";
          puck.score1 = 0;
@@ -245,7 +246,7 @@ void draw()
        {
          victory.rewind();
          victory.play(); 
-         title="PLAYER 2 WINS";
+         title="YOU LOSE";
          creater="";
          s="Again?";
          puck.score1 = 0;
