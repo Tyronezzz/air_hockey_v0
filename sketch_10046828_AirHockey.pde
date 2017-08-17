@@ -1,16 +1,19 @@
 /*
-
 Stuart Murphy 
 Interactive Media - 10056828
 Air Hockey Project
 23/04/2016
 
+
+revised by Dage, Tyrone
+date: 2017/08/16
 */
 
 // Use sounds credit to freesounds.org
 import ddf.minim.*;
-
+import processing.serial.*;
 ArrayList<paddle> paddles = new ArrayList();
+Serial myPort;  // Create object from Serial class
 
 // Class Types
 Puck puck;
@@ -56,7 +59,7 @@ Minim minim;
 
 void setup()
 {
-  size(600,600);
+  size(1000,600);
   
   // Place puck at center
   puckX = width/2;
@@ -84,6 +87,10 @@ void setup()
   wallHit = minim.loadSnippet("wall.mp3");
   score = minim.loadSnippet("score.wav");
   victory = minim.loadSnippet("victory.wav");
+  
+  
+  String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
+  myPort = new Serial(this, portName, 9600);
 }
 
 void draw()
@@ -197,6 +204,10 @@ void draw()
     
      // Draw Puck
      puck.display();
+    ellipseMode(CENTER);
+    fill(0,0,0,50);
+    stroke(0);
+    ellipse(width/2, height/2, height, height);
     
      // Puck Strike
      puck.hit();
@@ -204,18 +215,18 @@ void draw()
      // Goals
      rectMode(CENTER);
      fill(255,0,0,180);
-     rect(0,height/2,50,200,10); 
+     rect(200,height/2,50,200,10); 
      fill(255,0,0,180);
-     rect(width,height/2,50,200,10); 
+     rect(width-200,height/2,50,200,10); 
     
      // Scoreboard 
      textAlign(CENTER);
-     textSize(30);
+     textSize(20);
      fill(0);
      int score1 = puck.score1();
-     text("Player 1\n"+score1, width/4, 50); 
+     text("Player 1\n"+score1, 7*width/16-10, 60); 
      int score2 = puck.score2();
-     text("Player 2\n"+score2, width*.75, 50);
+     text("Player 2\n"+score2, width*9/16+10, 60);
   
      if(score1 == 5 || score2 == 5)
      {   
